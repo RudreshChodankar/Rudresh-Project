@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FlightModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AIRLINE_DETAILS">
+    <Key>
+      <PropertyRef Name="AIRLINEID" />
+    </Key>
+    <Property Name="AIRLINEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AIRLINE" Type="varchar" MaxLength="20" />
+    <Property Name="AIRLINECODE" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="FLIGHT_SERVICE">
+    <Key>
+      <PropertyRef Name="FLIGHTSERVICEID" />
+    </Key>
+    <Property Name="FLIGHTSERVICEID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FLIGHTSERVICENAME" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="JOURNEY_DETAILS">
+    <Key>
+      <PropertyRef Name="JOURNEYDETAILSID" />
+    </Key>
+    <Property Name="JOURNEYDETAILSID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FLIGHTORIGINID" Type="int" Nullable="false" />
+    <Property Name="FLIGHTDESTINATIONID" Type="int" Nullable="false" />
+    <Property Name="AIRLINEID" Type="int" Nullable="false" />
+    <Property Name="PRICE" Type="money" />
+    <Property Name="DEPARTURE" Type="datetime" />
+    <Property Name="ARRIVAL" Type="datetime" />
+    <Property Name="DURATION" Type="varchar" MaxLength="20" />
+    <Property Name="AVAILABLESEAT" Type="int" />
+    <Property Name="FLIGHTNUMBER" Type="int" />
+  </EntityType>
+  <EntityType Name="OPERATIONAL_DAY">
+    <Key>
+      <PropertyRef Name="OPERATIONALDAYID" />
+    </Key>
+    <Property Name="OPERATIONALDAYID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OPERATIONALDAY" Type="int" />
+    <Property Name="JOURNEYDETAILSID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="Password" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="AIRLINE_DETAILS_AIRLINEID">
+    <End Role="AIRLINE_DETAILS" Type="Self.AIRLINE_DETAILS" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AIRLINE_DETAILS">
+        <PropertyRef Name="AIRLINEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="AIRLINEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FLIGHT_SERVICE_FLIGHTDESTINATIONID">
+    <End Role="FLIGHT_SERVICE" Type="Self.FLIGHT_SERVICE" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FLIGHT_SERVICE">
+        <PropertyRef Name="FLIGHTSERVICEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="FLIGHTDESTINATIONID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FLIGHT_SERVICE_FLIGHTORIGINID">
+    <End Role="FLIGHT_SERVICE" Type="Self.FLIGHT_SERVICE" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FLIGHT_SERVICE">
+        <PropertyRef Name="FLIGHTSERVICEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="FLIGHTORIGINID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OPERATIONAL_DAY_JOURNEYDETAILSID">
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="1" />
+    <End Role="OPERATIONAL_DAY" Type="Self.OPERATIONAL_DAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOURNEY_DETAILS">
+        <PropertyRef Name="JOURNEYDETAILSID" />
+      </Principal>
+      <Dependent Role="OPERATIONAL_DAY">
+        <PropertyRef Name="JOURNEYDETAILSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FlightModelStoreContainer">
+    <EntitySet Name="AIRLINE_DETAILS" EntityType="Self.AIRLINE_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="FLIGHT_SERVICE" EntityType="Self.FLIGHT_SERVICE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="JOURNEY_DETAILS" EntityType="Self.JOURNEY_DETAILS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OPERATIONAL_DAY" EntityType="Self.OPERATIONAL_DAY" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="AIRLINE_DETAILS_AIRLINEID" Association="Self.AIRLINE_DETAILS_AIRLINEID">
+      <End Role="AIRLINE_DETAILS" EntitySet="AIRLINE_DETAILS" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FLIGHT_SERVICE_FLIGHTDESTINATIONID" Association="Self.FLIGHT_SERVICE_FLIGHTDESTINATIONID">
+      <End Role="FLIGHT_SERVICE" EntitySet="FLIGHT_SERVICE" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FLIGHT_SERVICE_FLIGHTORIGINID" Association="Self.FLIGHT_SERVICE_FLIGHTORIGINID">
+      <End Role="FLIGHT_SERVICE" EntitySet="FLIGHT_SERVICE" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="OPERATIONAL_DAY_JOURNEYDETAILSID" Association="Self.OPERATIONAL_DAY_JOURNEYDETAILSID">
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+      <End Role="OPERATIONAL_DAY" EntitySet="OPERATIONAL_DAY" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FlightModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AIRLINE_DETAILS">
+    <Key>
+      <PropertyRef Name="AIRLINEID" />
+    </Key>
+    <Property Name="AIRLINEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AIRLINE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AIRLINECODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="JOURNEY_DETAILS" Relationship="Self.AIRLINE_DETAILS_AIRLINEID" FromRole="AIRLINE_DETAILS" ToRole="JOURNEY_DETAILS" />
+  </EntityType>
+  <EntityType Name="FLIGHT_SERVICE">
+    <Key>
+      <PropertyRef Name="FLIGHTSERVICEID" />
+    </Key>
+    <Property Name="FLIGHTSERVICEID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FLIGHTSERVICENAME" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="JOURNEY_DETAILS" Relationship="Self.FLIGHT_SERVICE_FLIGHTDESTINATIONID" FromRole="FLIGHT_SERVICE" ToRole="JOURNEY_DETAILS" />
+    <NavigationProperty Name="JOURNEY_DETAILS1" Relationship="Self.FLIGHT_SERVICE_FLIGHTORIGINID" FromRole="FLIGHT_SERVICE" ToRole="JOURNEY_DETAILS" />
+  </EntityType>
+  <EntityType Name="JOURNEY_DETAILS">
+    <Key>
+      <PropertyRef Name="JOURNEYDETAILSID" />
+    </Key>
+    <Property Name="JOURNEYDETAILSID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FLIGHTORIGINID" Type="Int32" Nullable="false" />
+    <Property Name="FLIGHTDESTINATIONID" Type="Int32" Nullable="false" />
+    <Property Name="AIRLINEID" Type="Int32" Nullable="false" />
+    <Property Name="PRICE" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="DEPARTURE" Type="DateTime" Precision="3" />
+    <Property Name="ARRIVAL" Type="DateTime" Precision="3" />
+    <Property Name="DURATION" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="AVAILABLESEAT" Type="Int32" />
+    <Property Name="FLIGHTNUMBER" Type="Int32" />
+    <NavigationProperty Name="AIRLINE_DETAILS" Relationship="Self.AIRLINE_DETAILS_AIRLINEID" FromRole="JOURNEY_DETAILS" ToRole="AIRLINE_DETAILS" />
+    <NavigationProperty Name="FLIGHT_SERVICE" Relationship="Self.FLIGHT_SERVICE_FLIGHTDESTINATIONID" FromRole="JOURNEY_DETAILS" ToRole="FLIGHT_SERVICE" />
+    <NavigationProperty Name="FLIGHT_SERVICE1" Relationship="Self.FLIGHT_SERVICE_FLIGHTORIGINID" FromRole="JOURNEY_DETAILS" ToRole="FLIGHT_SERVICE" />
+    <NavigationProperty Name="OPERATIONAL_DAY" Relationship="Self.OPERATIONAL_DAY_JOURNEYDETAILSID" FromRole="JOURNEY_DETAILS" ToRole="OPERATIONAL_DAY" />
+  </EntityType>
+  <EntityType Name="OPERATIONAL_DAY">
+    <Key>
+      <PropertyRef Name="OPERATIONALDAYID" />
+    </Key>
+    <Property Name="OPERATIONALDAYID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OPERATIONALDAY" Type="Int32" />
+    <Property Name="JOURNEYDETAILSID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="JOURNEY_DETAILS" Relationship="Self.OPERATIONAL_DAY_JOURNEYDETAILSID" FromRole="OPERATIONAL_DAY" ToRole="JOURNEY_DETAILS" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <Association Name="AIRLINE_DETAILS_AIRLINEID">
+    <End Role="AIRLINE_DETAILS" Type="Self.AIRLINE_DETAILS" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AIRLINE_DETAILS">
+        <PropertyRef Name="AIRLINEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="AIRLINEID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FLIGHT_SERVICE_FLIGHTDESTINATIONID">
+    <End Role="FLIGHT_SERVICE" Type="Self.FLIGHT_SERVICE" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FLIGHT_SERVICE">
+        <PropertyRef Name="FLIGHTSERVICEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="FLIGHTDESTINATIONID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FLIGHT_SERVICE_FLIGHTORIGINID">
+    <End Role="FLIGHT_SERVICE" Type="Self.FLIGHT_SERVICE" Multiplicity="1" />
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FLIGHT_SERVICE">
+        <PropertyRef Name="FLIGHTSERVICEID" />
+      </Principal>
+      <Dependent Role="JOURNEY_DETAILS">
+        <PropertyRef Name="FLIGHTORIGINID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OPERATIONAL_DAY_JOURNEYDETAILSID">
+    <End Role="JOURNEY_DETAILS" Type="Self.JOURNEY_DETAILS" Multiplicity="1" />
+    <End Role="OPERATIONAL_DAY" Type="Self.OPERATIONAL_DAY" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="JOURNEY_DETAILS">
+        <PropertyRef Name="JOURNEYDETAILSID" />
+      </Principal>
+      <Dependent Role="OPERATIONAL_DAY">
+        <PropertyRef Name="JOURNEYDETAILSID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FlightEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AIRLINE_DETAILS" EntityType="Self.AIRLINE_DETAILS" />
+    <EntitySet Name="FLIGHT_SERVICE" EntityType="Self.FLIGHT_SERVICE" />
+    <EntitySet Name="JOURNEY_DETAILS" EntityType="Self.JOURNEY_DETAILS" />
+    <EntitySet Name="OPERATIONAL_DAY" EntityType="Self.OPERATIONAL_DAY" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="AIRLINE_DETAILS_AIRLINEID" Association="Self.AIRLINE_DETAILS_AIRLINEID">
+      <End Role="AIRLINE_DETAILS" EntitySet="AIRLINE_DETAILS" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FLIGHT_SERVICE_FLIGHTDESTINATIONID" Association="Self.FLIGHT_SERVICE_FLIGHTDESTINATIONID">
+      <End Role="FLIGHT_SERVICE" EntitySet="FLIGHT_SERVICE" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="FLIGHT_SERVICE_FLIGHTORIGINID" Association="Self.FLIGHT_SERVICE_FLIGHTORIGINID">
+      <End Role="FLIGHT_SERVICE" EntitySet="FLIGHT_SERVICE" />
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="OPERATIONAL_DAY_JOURNEYDETAILSID" Association="Self.OPERATIONAL_DAY_JOURNEYDETAILSID">
+      <End Role="JOURNEY_DETAILS" EntitySet="JOURNEY_DETAILS" />
+      <End Role="OPERATIONAL_DAY" EntitySet="OPERATIONAL_DAY" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

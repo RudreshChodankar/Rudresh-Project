@@ -1,0 +1,65 @@
+﻿<h2>Flight Search  </h2>
+<script src="~/Script/JQuery.js"></script>
+<script src="~/Script/FlightSearchCtrl.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script lang="ja" type="text/javascript">
+
+</script>
+
+<div>
+    <table width="100%">
+        <tr>
+            <td style="width:25%">
+                <table width="100%">
+                    <tr>
+                        <td style="width:100px">Airline Code :  </td>
+                        <td><input type="text" id="txtAirlineCode" maxlength="2"/></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px">Origin :  </td>
+                        <td><input type="text" id="txtOrigin" maxlength="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px">Destination :  </td>
+                        <td><input type="text" id="txtDestination" maxlength="3" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px">Departure : </td>
+                        <td><input type="date" id="txtDeparture" /></td>
+                    </tr>
+                    <tr>
+                        <td style="width:100px"></td>
+                        <td>
+
+                            <input id="btnFlightSearch" type="button" onclick="SearchFlight();" value="Search" />
+                            <input id="btnFlightSearch" type="button" onclick="Clear();" value="Clear" />
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+            <td>
+                <table id="flightresulttable" border="1" width="100%">
+                    <thead>
+                        <tr style="font-weight:bold;">
+                            <th>AirLine Name</th>
+                            <th>AirLine Code</th>
+                            <th>Flight Number</th>
+                            <th>Origin</th>
+                            <th>Available Seats</th>
+                            <th>Destination</th>
+                            <th>Price</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Duration</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+

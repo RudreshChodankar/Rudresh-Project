@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FlightModelStoreContainer" CdmEntityContainer="FlightEntities">
+    <EntitySetMapping Name="AIRLINE_DETAILS">
+      <EntityTypeMapping TypeName="FlightModel.AIRLINE_DETAILS">
+        <MappingFragment StoreEntitySet="AIRLINE_DETAILS">
+          <ScalarProperty Name="AIRLINEID" ColumnName="AIRLINEID" />
+          <ScalarProperty Name="AIRLINE" ColumnName="AIRLINE" />
+          <ScalarProperty Name="AIRLINECODE" ColumnName="AIRLINECODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FLIGHT_SERVICE">
+      <EntityTypeMapping TypeName="FlightModel.FLIGHT_SERVICE">
+        <MappingFragment StoreEntitySet="FLIGHT_SERVICE">
+          <ScalarProperty Name="FLIGHTSERVICEID" ColumnName="FLIGHTSERVICEID" />
+          <ScalarProperty Name="FLIGHTSERVICENAME" ColumnName="FLIGHTSERVICENAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JOURNEY_DETAILS">
+      <EntityTypeMapping TypeName="FlightModel.JOURNEY_DETAILS">
+        <MappingFragment StoreEntitySet="JOURNEY_DETAILS">
+          <ScalarProperty Name="JOURNEYDETAILSID" ColumnName="JOURNEYDETAILSID" />
+          <ScalarProperty Name="FLIGHTORIGINID" ColumnName="FLIGHTORIGINID" />
+          <ScalarProperty Name="FLIGHTDESTINATIONID" ColumnName="FLIGHTDESTINATIONID" />
+          <ScalarProperty Name="AIRLINEID" ColumnName="AIRLINEID" />
+          <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+          <ScalarProperty Name="DEPARTURE" ColumnName="DEPARTURE" />
+          <ScalarProperty Name="ARRIVAL" ColumnName="ARRIVAL" />
+          <ScalarProperty Name="DURATION" ColumnName="DURATION" />
+          <ScalarProperty Name="AVAILABLESEAT" ColumnName="AVAILABLESEAT" />
+          <ScalarProperty Name="FLIGHTNUMBER" ColumnName="FLIGHTNUMBER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OPERATIONAL_DAY">
+      <EntityTypeMapping TypeName="FlightModel.OPERATIONAL_DAY">
+        <MappingFragment StoreEntitySet="OPERATIONAL_DAY">
+          <ScalarProperty Name="OPERATIONALDAYID" ColumnName="OPERATIONALDAYID" />
+          <ScalarProperty Name="OPERATIONALDAY" ColumnName="OPERATIONALDAY" />
+          <ScalarProperty Name="JOURNEYDETAILSID" ColumnName="JOURNEYDETAILSID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="FlightModel.User">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
